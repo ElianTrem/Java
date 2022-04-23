@@ -48,7 +48,7 @@ public class Login extends javax.swing.JFrame {
         bg.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         favicon.setFont(new java.awt.Font("Roboto Black", 1, 24)); // NOI18N
-        favicon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/images/logo1.png"))); // NOI18N
+        favicon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/logo1.png"))); // NOI18N
         favicon.setText("Clinica La Esperanza");
         bg.add(favicon, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 320, 90));
 

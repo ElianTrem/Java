@@ -552,11 +552,11 @@ public class Prototipo extends javax.swing.JFrame {
     }//GEN-LAST:event_ModificartxtMouseClicked
 
     private void ModificartxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ModificartxtMouseEntered
-        Modificartxt.setBackground(new Color(0, 156, 223));
+        ModificarBtn.setBackground(new Color(0, 156, 223));
     }//GEN-LAST:event_ModificartxtMouseEntered
 
     private void ModificartxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ModificartxtMouseExited
-         Modificartxt.setBackground(new Color(84,186,185));
+         ModificarBtn.setBackground(new Color(84,186,185));
     }//GEN-LAST:event_ModificartxtMouseExited
 void mostar(){
     Color myColor = new Color(239,255,253);
