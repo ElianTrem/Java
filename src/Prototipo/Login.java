@@ -6,18 +6,31 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
+import java.io.*;
+import java.util.Properties;
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 public class Login extends javax.swing.JFrame {
-    
-    int xMouse, yMouse;
+
+    int xMouse, yMouse;//
     private boolean estado = true;
-    
+
     public Login() {
         initComponents();
         setLocationRelativeTo(null);
     }
-    
+    public static String User,pass;
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -37,6 +50,7 @@ public class Login extends javax.swing.JFrame {
         exitBtn = new javax.swing.JPanel();
         exitTxt = new javax.swing.JLabel();
         header = new javax.swing.JPanel();
+        Forgot = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -195,6 +209,21 @@ public class Login extends javax.swing.JFrame {
 
         bg.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 40));
 
+        Forgot.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        Forgot.setText("¿OLVIDO SU CONTRASEÑA?");
+        Forgot.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ForgotMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                ForgotMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                ForgotMouseExited(evt);
+            }
+        });
+        bg.add(Forgot, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -235,7 +264,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_exitTxtMouseExited
 
     private void userTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_userTxtMousePressed
-    if (userTxt.getText().equals("Ingrese su nombre de usuario")) {
+        if (userTxt.getText().equals("Ingrese su nombre de usuario")) {
             userTxt.setText("");
             userTxt.setForeground(Color.black);
         }
@@ -245,45 +274,43 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_userTxtMousePressed
     private void jLabel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseEntered
-         loginBtn.setBackground(new Color(0, 156, 223));
+        loginBtn.setBackground(new Color(0, 156, 223));
     }//GEN-LAST:event_jLabel1MouseEntered
 
     private void jLabel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseExited
-       loginBtn.setBackground(new Color(84,186,185));
+        loginBtn.setBackground(new Color(84, 186, 185));
     }//GEN-LAST:event_jLabel1MouseExited
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-       String a=userTxt.getText();
-       String b=String.valueOf(passTxt.getPassword());
-       boolean flag=false;
-       
-       try{
-            conexionBD conex=new conexionBD();
-            ResultSet r = conex.consultar("Select usercol,contra FROM usuario WHERE usercol="+"'"+userTxt.getText()+"'");
-            if (r.next()==false) { 
-                JOptionPane.showMessageDialog(null,"Usuario o contraseña incorrecto","ERROR",JOptionPane.ERROR_MESSAGE);
-           }else{
-                System.out.println("entra");
-                do{
-                System.out.println(r.getString("usercol"));              
-                if(r.getString("usercol").equals(a)){                     
-                    if(r.getString("contra").equals(b)){
-                        System.out.println("correcto");                       
-                         new Prototipo().setVisible(true);
-                          dispose();
-                    }else{   System.out.println("Incorrecto contra");
-                        JOptionPane.showMessageDialog(null,"Usuario o contraseña incorrecto","ERROR",JOptionPane.ERROR_MESSAGE);}                    
-                } 
-                }while(r.next());            
+        User = userTxt.getText();
+        pass = String.valueOf(passTxt.getPassword());
+        try {
+            conexionBD conex = new conexionBD();
+            ResultSet r = conex.consultar("Select usercol,contra FROM usuario WHERE usercol=" + "'" + userTxt.getText() + "'");
+            if (r.next() == false) {
+                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecto", "ERROR", JOptionPane.ERROR_MESSAGE);
+            } else {
+                do {
+                    if (r.getString("usercol").equals(User)) {
+                        if (r.getString("contra").equals(pass)) {
+                            System.out.println("correcto");
+                            new Prototipo().setVisible(true);
+                            dispose();
+                        } else {
+                            System.out.println("Incorrecto contra");
+                            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecto", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                } while (r.next());
             }
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }       
+        }
     }//GEN-LAST:event_jLabel1MouseClicked
 
-            
+
     private void passTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_passTxtMousePressed
-       if (String.valueOf(passTxt.getPassword()).equals("********")) {
+        if (String.valueOf(passTxt.getPassword()).equals("********")) {
             passTxt.setText("");
             passTxt.setForeground(Color.black);
         }
@@ -297,9 +324,78 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_passTxtActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void ForgotMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ForgotMouseEntered
+        // TODO add your handling code here:
+        Forgot.setForeground(Color.blue);
+    }//GEN-LAST:event_ForgotMouseEntered
+
+    private void ForgotMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ForgotMouseExited
+        // TODO add your handling code here:
+        Forgot.setForeground(Color.black);
+    }//GEN-LAST:event_ForgotMouseExited
+
+    private void ForgotMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ForgotMouseClicked
+        // TODO add your handling code here:
+        String a =userTxt.getText();
+        String b = "";
+        try {
+            conexionBD conex = new conexionBD();
+            ResultSet r = conex.consultar("Select usercol,contra FROM usuario WHERE usercol=" + "'" + userTxt.getText() + "'");
+            if (r.next() == false) {
+                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecto", "ERROR", JOptionPane.ERROR_MESSAGE);
+            } else {                
+                    if (r.getString("usercol").equals(a)) {
+                        ResultSet pass = conex.consultar("Select contra FROM usuario WHERE usercol=" + "'" + userTxt.getText() + "'");
+                        while (pass.next()) {
+                            b = pass.getString("contra");
+                            mailsender(a,b);
+                            new ALERTA().setVisible(true);
+                        }
+                    }else{JOptionPane.showMessageDialog(null, "Usuario incorrecto o inexistente", "ERROR", JOptionPane.ERROR_MESSAGE);}
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MessagingException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_ForgotMouseClicked
+
+    void mailsender(String A, String B) throws AddressException, MessagingException {
+        String correo = "clinicadentallaesperanza@gmail.com";
+        String contra = "mwznkylnrthqlzww";
+        String correoDestino = "clinicadentallaesperanza@gmail.com";
+        Properties p = new Properties();
+        p.put("mail.smtp.host", "smtp.gmail.com");
+        p.setProperty("mail.smtp.starttls.enable", "true");
+        p.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        p.setProperty("mail.smtp.port", "587");
+        p.setProperty("mail.smtp.user", correo);
+        p.setProperty("mail.smtp.auth", "true");
+        Session s = Session.getDefaultInstance(p);
+
+        BodyPart texto = new MimeBodyPart();
+        texto.setText("Recuperacion de la contraseña de: " + A + "\n" + "Su contraseña es: " + B);
+        BodyPart adjunto = new MimeBodyPart();
+
+        adjunto.setDataHandler(new DataHandler(new FileDataSource("C:/Users/elian/Documents/firma.jpg")));
+        adjunto.setFileName("firma.jpg");
+        MimeMultipart m = new MimeMultipart();
+        m.addBodyPart(texto);
+        m.addBodyPart(adjunto);
+
+        MimeMessage mensaje = new MimeMessage(s);
+        mensaje.setFrom(new InternetAddress(correo));
+        mensaje.addRecipient(Message.RecipientType.TO, new InternetAddress(correoDestino));
+        mensaje.setSubject("Recuperacion de la contraseña de: " + A);
+        mensaje.setContent(m);
+
+        Transport t = s.getTransport("smtp");
+        t.connect(correo, contra);
+        t.sendMessage(mensaje, mensaje.getAllRecipients());
+        t.close();
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -333,6 +429,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Forgot;
     private javax.swing.JPanel bg;
     private javax.swing.JPanel exitBtn;
     private javax.swing.JLabel exitTxt;
