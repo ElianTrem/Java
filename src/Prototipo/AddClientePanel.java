@@ -343,6 +343,7 @@ public class AddClientePanel extends javax.swing.JFrame {
             }
         } else {
             JOptionPane.showMessageDialog(null, "Error, porfavor rellene correctamente los campos, solo poner texto donde se le pide y poner numero donde se le pide", "Error Al Ingresar Datos", JOptionPane.ERROR_MESSAGE);
+            dispose();
         }
     }//GEN-LAST:event_AnadirMouseClicked
 

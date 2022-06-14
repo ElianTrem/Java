@@ -13,12 +13,33 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.util.Date;
+import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.Properties;
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import static javax.swing.JOptionPane.YES_NO_OPTION;
+import javax.swing.JTextField;
 
 /**
  *
@@ -45,9 +66,10 @@ public class Prototipo extends javax.swing.JFrame {
         AggtraPanel.setVisible(false);
     }
     public static String confirmacion = "";
-    public static String auxname, auxape, auxtel, auxmail;
+    public static String auxname, auxape, auxtel, auxmail, auxprice, auxnt, idcombo, idtrata, idtt;
     public static Date auxfen, auxlc;
     public static int identidad = 0;
+    public static int aggomod = 0, agmodcita = 0;
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -100,30 +122,34 @@ public class Prototipo extends javax.swing.JFrame {
         Scroll1 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         InrBtn = new javax.swing.JPanel();
-        Ingresartxt1 = new javax.swing.JLabel();
-        EliminarBtn1 = new javax.swing.JPanel();
-        Eliminartxt1 = new javax.swing.JLabel();
-        ModificarBtn1 = new javax.swing.JPanel();
-        Modificartxt1 = new javax.swing.JLabel();
+        Aggcita = new javax.swing.JLabel();
+        Delcitabtn = new javax.swing.JPanel();
+        DelCita = new javax.swing.JLabel();
+        ModcitarBtn = new javax.swing.JPanel();
+        Modcita = new javax.swing.JLabel();
         reminderBtn = new javax.swing.JPanel();
-        Ingresartxt2 = new javax.swing.JLabel();
+        reminderMail = new javax.swing.JLabel();
         UpdateBtn2 = new javax.swing.JPanel();
-        Updatetxt2 = new javax.swing.JLabel();
+        Actucitas = new javax.swing.JLabel();
+        Addmodcitas = new javax.swing.JPanel();
+        Clientecombox = new javax.swing.JComboBox<>();
+        tratacombox = new javax.swing.JComboBox<>();
+        txtFecha1 = new com.toedter.calendar.JDateChooser();
         Tratamiento = new javax.swing.JPanel();
         favicon1 = new javax.swing.JLabel();
         Scroll2 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
-        IngresarBtn1 = new javax.swing.JPanel();
+        Addtrat = new javax.swing.JPanel();
         Addtra = new javax.swing.JLabel();
-        EliminarBtn2 = new javax.swing.JPanel();
+        Deltrat = new javax.swing.JPanel();
         Deltra = new javax.swing.JLabel();
-        ModificarBtn2 = new javax.swing.JPanel();
-        Modtra = new javax.swing.JLabel();
-        UpdateBtn1 = new javax.swing.JPanel();
+        Modtrat = new javax.swing.JPanel();
+        modtra = new javax.swing.JLabel();
+        actutrat = new javax.swing.JPanel();
         Updatra = new javax.swing.JLabel();
         AggtraPanel = new javax.swing.JPanel();
-        nombreTxt = new javax.swing.JTextField();
-        precioTxt = new javax.swing.JTextField();
+        nombret = new javax.swing.JTextField();
+        precio = new javax.swing.JTextField();
         ConTratamiento = new javax.swing.JPanel();
         Confi = new javax.swing.JLabel();
 
@@ -138,6 +164,7 @@ public class Prototipo extends javax.swing.JFrame {
             }
         });
 
+        jPanel1.setName(""); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         header.setBackground(new java.awt.Color(251, 248, 241));
@@ -758,7 +785,7 @@ public class Prototipo extends javax.swing.JFrame {
         favicon2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/logo1.png"))); // NOI18N
         favicon2.setText("Clinica La Esperanza");
         Citas.add(favicon2);
-        favicon2.setBounds(720, 30, 426, 91);
+        favicon2.setBounds(780, 0, 426, 91);
 
         Scroll1.setBackground(new java.awt.Color(239, 255, 253));
         Scroll1.setBorder(null);
@@ -822,21 +849,21 @@ public class Prototipo extends javax.swing.JFrame {
         }
 
         Citas.add(Scroll1);
-        Scroll1.setBounds(90, 130, 1119, 404);
+        Scroll1.setBounds(90, 90, 1119, 340);
 
         InrBtn.setBackground(new java.awt.Color(242, 120, 159));
 
-        Ingresartxt1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        Ingresartxt1.setText("Ingresar");
-        Ingresartxt1.addMouseListener(new java.awt.event.MouseAdapter() {
+        Aggcita.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        Aggcita.setText("Ingresar");
+        Aggcita.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Ingresartxt1MouseClicked(evt);
+                AggcitaMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                Ingresartxt1MouseEntered(evt);
+                AggcitaMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                Ingresartxt1MouseExited(evt);
+                AggcitaMouseExited(evt);
             }
         });
 
@@ -846,96 +873,96 @@ public class Prototipo extends javax.swing.JFrame {
             InrBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InrBtnLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Ingresartxt1)
+                .addComponent(Aggcita)
                 .addGap(24, 24, 24))
         );
         InrBtnLayout.setVerticalGroup(
             InrBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Ingresartxt1, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addComponent(Aggcita, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
         Citas.add(InrBtn);
         InrBtn.setBounds(90, 580, 100, 40);
 
-        EliminarBtn1.setBackground(new java.awt.Color(242, 120, 159));
+        Delcitabtn.setBackground(new java.awt.Color(242, 120, 159));
 
-        Eliminartxt1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        Eliminartxt1.setText("Eliminar ");
-        Eliminartxt1.addMouseListener(new java.awt.event.MouseAdapter() {
+        DelCita.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        DelCita.setText("Eliminar ");
+        DelCita.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Eliminartxt1MouseClicked(evt);
+                DelCitaMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                Eliminartxt1MouseEntered(evt);
+                DelCitaMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                Eliminartxt1MouseExited(evt);
+                DelCitaMouseExited(evt);
             }
         });
 
-        javax.swing.GroupLayout EliminarBtn1Layout = new javax.swing.GroupLayout(EliminarBtn1);
-        EliminarBtn1.setLayout(EliminarBtn1Layout);
-        EliminarBtn1Layout.setHorizontalGroup(
-            EliminarBtn1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, EliminarBtn1Layout.createSequentialGroup()
+        javax.swing.GroupLayout DelcitabtnLayout = new javax.swing.GroupLayout(Delcitabtn);
+        Delcitabtn.setLayout(DelcitabtnLayout);
+        DelcitabtnLayout.setHorizontalGroup(
+            DelcitabtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DelcitabtnLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Eliminartxt1)
+                .addComponent(DelCita)
                 .addContainerGap())
         );
-        EliminarBtn1Layout.setVerticalGroup(
-            EliminarBtn1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Eliminartxt1, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+        DelcitabtnLayout.setVerticalGroup(
+            DelcitabtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(DelCita, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
-        Citas.add(EliminarBtn1);
-        EliminarBtn1.setBounds(210, 580, 100, 40);
+        Citas.add(Delcitabtn);
+        Delcitabtn.setBounds(210, 580, 100, 40);
 
-        ModificarBtn1.setBackground(new java.awt.Color(242, 120, 159));
+        ModcitarBtn.setBackground(new java.awt.Color(242, 120, 159));
 
-        Modificartxt1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        Modificartxt1.setText("Modificar");
-        Modificartxt1.addMouseListener(new java.awt.event.MouseAdapter() {
+        Modcita.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        Modcita.setText("Modificar");
+        Modcita.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Modificartxt1MouseClicked(evt);
+                ModcitaMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                Modificartxt1MouseEntered(evt);
+                ModcitaMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                Modificartxt1MouseExited(evt);
+                ModcitaMouseExited(evt);
             }
         });
 
-        javax.swing.GroupLayout ModificarBtn1Layout = new javax.swing.GroupLayout(ModificarBtn1);
-        ModificarBtn1.setLayout(ModificarBtn1Layout);
-        ModificarBtn1Layout.setHorizontalGroup(
-            ModificarBtn1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ModificarBtn1Layout.createSequentialGroup()
+        javax.swing.GroupLayout ModcitarBtnLayout = new javax.swing.GroupLayout(ModcitarBtn);
+        ModcitarBtn.setLayout(ModcitarBtnLayout);
+        ModcitarBtnLayout.setHorizontalGroup(
+            ModcitarBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ModcitarBtnLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Modificartxt1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Modcita, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(27, 27, 27))
         );
-        ModificarBtn1Layout.setVerticalGroup(
-            ModificarBtn1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Modificartxt1, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+        ModcitarBtnLayout.setVerticalGroup(
+            ModcitarBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(Modcita, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
-        Citas.add(ModificarBtn1);
-        ModificarBtn1.setBounds(330, 580, 110, 40);
+        Citas.add(ModcitarBtn);
+        ModcitarBtn.setBounds(330, 580, 110, 40);
 
         reminderBtn.setBackground(new java.awt.Color(242, 120, 159));
 
-        Ingresartxt2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        Ingresartxt2.setText("Enviar Recordatorio");
-        Ingresartxt2.addMouseListener(new java.awt.event.MouseAdapter() {
+        reminderMail.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        reminderMail.setText("Enviar Recordatorio");
+        reminderMail.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Ingresartxt2MouseClicked(evt);
+                reminderMailMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                Ingresartxt2MouseEntered(evt);
+                reminderMailMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                Ingresartxt2MouseExited(evt);
+                reminderMailMouseExited(evt);
             }
         });
 
@@ -945,12 +972,12 @@ public class Prototipo extends javax.swing.JFrame {
             reminderBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, reminderBtnLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Ingresartxt2)
+                .addComponent(reminderMail)
                 .addGap(38, 38, 38))
         );
         reminderBtnLayout.setVerticalGroup(
             reminderBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Ingresartxt2, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addComponent(reminderMail, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
         Citas.add(reminderBtn);
@@ -958,17 +985,17 @@ public class Prototipo extends javax.swing.JFrame {
 
         UpdateBtn2.setBackground(new java.awt.Color(242, 120, 159));
 
-        Updatetxt2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        Updatetxt2.setText("Actualizar");
-        Updatetxt2.addMouseListener(new java.awt.event.MouseAdapter() {
+        Actucitas.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        Actucitas.setText("Actualizar");
+        Actucitas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Updatetxt2MouseClicked(evt);
+                ActucitasMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                Updatetxt2MouseEntered(evt);
+                ActucitasMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                Updatetxt2MouseExited(evt);
+                ActucitasMouseExited(evt);
             }
         });
 
@@ -978,16 +1005,49 @@ public class Prototipo extends javax.swing.JFrame {
             UpdateBtn2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, UpdateBtn2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Updatetxt2)
+                .addComponent(Actucitas)
                 .addGap(24, 24, 24))
         );
         UpdateBtn2Layout.setVerticalGroup(
             UpdateBtn2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Updatetxt2, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+            .addComponent(Actucitas, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
         Citas.add(UpdateBtn2);
         UpdateBtn2.setBounds(480, 580, 110, 40);
+
+        Addmodcitas.setBackground(new java.awt.Color(254, 227, 236));
+
+        Clientecombox.setMaximumRowCount(100);
+
+        tratacombox.setMaximumRowCount(100);
+
+        javax.swing.GroupLayout AddmodcitasLayout = new javax.swing.GroupLayout(Addmodcitas);
+        Addmodcitas.setLayout(AddmodcitasLayout);
+        AddmodcitasLayout.setHorizontalGroup(
+            AddmodcitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AddmodcitasLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(Clientecombox, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(tratacombox, 0, 316, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(txtFecha1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37))
+        );
+        AddmodcitasLayout.setVerticalGroup(
+            AddmodcitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AddmodcitasLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(AddmodcitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtFecha1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tratacombox, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(Clientecombox))
+                .addContainerGap(45, Short.MAX_VALUE))
+        );
+
+        Citas.add(Addmodcitas);
+        Addmodcitas.setBounds(240, 450, 960, 100);
 
         jPanel1.add(Citas, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 1220, 670));
 
@@ -1046,7 +1106,7 @@ public class Prototipo extends javax.swing.JFrame {
 
         Tratamiento.add(Scroll2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 890, 310));
 
-        IngresarBtn1.setBackground(new java.awt.Color(190, 140, 99));
+        Addtrat.setBackground(new java.awt.Color(190, 140, 99));
 
         Addtra.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         Addtra.setText("Ingresar");
@@ -1062,23 +1122,23 @@ public class Prototipo extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout IngresarBtn1Layout = new javax.swing.GroupLayout(IngresarBtn1);
-        IngresarBtn1.setLayout(IngresarBtn1Layout);
-        IngresarBtn1Layout.setHorizontalGroup(
-            IngresarBtn1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, IngresarBtn1Layout.createSequentialGroup()
+        javax.swing.GroupLayout AddtratLayout = new javax.swing.GroupLayout(Addtrat);
+        Addtrat.setLayout(AddtratLayout);
+        AddtratLayout.setHorizontalGroup(
+            AddtratLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AddtratLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Addtra)
                 .addGap(24, 24, 24))
         );
-        IngresarBtn1Layout.setVerticalGroup(
-            IngresarBtn1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        AddtratLayout.setVerticalGroup(
+            AddtratLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Addtra, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
-        Tratamiento.add(IngresarBtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 590, -1, -1));
+        Tratamiento.add(Addtrat, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 590, -1, -1));
 
-        EliminarBtn2.setBackground(new java.awt.Color(190, 140, 99));
+        Deltrat.setBackground(new java.awt.Color(190, 140, 99));
 
         Deltra.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         Deltra.setText("Eliminar ");
@@ -1094,55 +1154,55 @@ public class Prototipo extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout EliminarBtn2Layout = new javax.swing.GroupLayout(EliminarBtn2);
-        EliminarBtn2.setLayout(EliminarBtn2Layout);
-        EliminarBtn2Layout.setHorizontalGroup(
-            EliminarBtn2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(EliminarBtn2Layout.createSequentialGroup()
+        javax.swing.GroupLayout DeltratLayout = new javax.swing.GroupLayout(Deltrat);
+        Deltrat.setLayout(DeltratLayout);
+        DeltratLayout.setHorizontalGroup(
+            DeltratLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DeltratLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(Deltra)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        EliminarBtn2Layout.setVerticalGroup(
-            EliminarBtn2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        DeltratLayout.setVerticalGroup(
+            DeltratLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Deltra, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
-        Tratamiento.add(EliminarBtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 590, -1, -1));
+        Tratamiento.add(Deltrat, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 590, -1, -1));
 
-        ModificarBtn2.setBackground(new java.awt.Color(190, 140, 99));
+        Modtrat.setBackground(new java.awt.Color(190, 140, 99));
 
-        Modtra.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        Modtra.setText("Modificar");
-        Modtra.addMouseListener(new java.awt.event.MouseAdapter() {
+        modtra.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        modtra.setText("Modificar");
+        modtra.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ModtraMouseClicked(evt);
+                modtraMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                ModtraMouseEntered(evt);
+                modtraMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                ModtraMouseExited(evt);
+                modtraMouseExited(evt);
             }
         });
 
-        javax.swing.GroupLayout ModificarBtn2Layout = new javax.swing.GroupLayout(ModificarBtn2);
-        ModificarBtn2.setLayout(ModificarBtn2Layout);
-        ModificarBtn2Layout.setHorizontalGroup(
-            ModificarBtn2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ModificarBtn2Layout.createSequentialGroup()
+        javax.swing.GroupLayout ModtratLayout = new javax.swing.GroupLayout(Modtrat);
+        Modtrat.setLayout(ModtratLayout);
+        ModtratLayout.setHorizontalGroup(
+            ModtratLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ModtratLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Modtra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(modtra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(27, 27, 27))
         );
-        ModificarBtn2Layout.setVerticalGroup(
-            ModificarBtn2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Modtra, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+        ModtratLayout.setVerticalGroup(
+            ModtratLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(modtra, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
-        Tratamiento.add(ModificarBtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 590, -1, -1));
+        Tratamiento.add(Modtrat, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 590, -1, -1));
 
-        UpdateBtn1.setBackground(new java.awt.Color(190, 140, 99));
+        actutrat.setBackground(new java.awt.Color(190, 140, 99));
 
         Updatra.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         Updatra.setText("Actualizar");
@@ -1158,53 +1218,53 @@ public class Prototipo extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout UpdateBtn1Layout = new javax.swing.GroupLayout(UpdateBtn1);
-        UpdateBtn1.setLayout(UpdateBtn1Layout);
-        UpdateBtn1Layout.setHorizontalGroup(
-            UpdateBtn1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, UpdateBtn1Layout.createSequentialGroup()
+        javax.swing.GroupLayout actutratLayout = new javax.swing.GroupLayout(actutrat);
+        actutrat.setLayout(actutratLayout);
+        actutratLayout.setHorizontalGroup(
+            actutratLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, actutratLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Updatra)
                 .addGap(24, 24, 24))
         );
-        UpdateBtn1Layout.setVerticalGroup(
-            UpdateBtn1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        actutratLayout.setVerticalGroup(
+            actutratLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Updatra, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
-        Tratamiento.add(UpdateBtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 590, -1, -1));
+        Tratamiento.add(actutrat, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 590, -1, -1));
 
         AggtraPanel.setBackground(new java.awt.Color(233, 218, 193));
 
-        nombreTxt.setBackground(new java.awt.Color(251, 248, 241));
-        nombreTxt.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        nombreTxt.setForeground(new java.awt.Color(204, 204, 204));
-        nombreTxt.setText("Ingrese el nombre del tratamiento");
-        nombreTxt.setBorder(null);
-        nombreTxt.addMouseListener(new java.awt.event.MouseAdapter() {
+        nombret.setBackground(new java.awt.Color(251, 248, 241));
+        nombret.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        nombret.setForeground(new java.awt.Color(204, 204, 204));
+        nombret.setText("Ingrese el nombre del tratamiento");
+        nombret.setBorder(null);
+        nombret.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                nombreTxtMousePressed(evt);
+                nombretMousePressed(evt);
             }
         });
-        nombreTxt.addActionListener(new java.awt.event.ActionListener() {
+        nombret.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nombreTxtActionPerformed(evt);
+                nombretActionPerformed(evt);
             }
         });
 
-        precioTxt.setBackground(new java.awt.Color(251, 248, 241));
-        precioTxt.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        precioTxt.setForeground(new java.awt.Color(204, 204, 204));
-        precioTxt.setText("Ingrese el precio del tratamiento");
-        precioTxt.setBorder(null);
-        precioTxt.addMouseListener(new java.awt.event.MouseAdapter() {
+        precio.setBackground(new java.awt.Color(251, 248, 241));
+        precio.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        precio.setForeground(new java.awt.Color(204, 204, 204));
+        precio.setText("Ingrese el precio del tratamiento");
+        precio.setBorder(null);
+        precio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                precioTxtMousePressed(evt);
+                precioMousePressed(evt);
             }
         });
-        precioTxt.addActionListener(new java.awt.event.ActionListener() {
+        precio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                precioTxtActionPerformed(evt);
+                precioActionPerformed(evt);
             }
         });
 
@@ -1246,9 +1306,9 @@ public class Prototipo extends javax.swing.JFrame {
                 .addGroup(AggtraPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(AggtraPanelLayout.createSequentialGroup()
                         .addGap(91, 91, 91)
-                        .addComponent(nombreTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nombret, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(83, 83, 83)
-                        .addComponent(precioTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(precio, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(AggtraPanelLayout.createSequentialGroup()
                         .addGap(386, 386, 386)
                         .addComponent(ConTratamiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -1258,8 +1318,8 @@ public class Prototipo extends javax.swing.JFrame {
             AggtraPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AggtraPanelLayout.createSequentialGroup()
                 .addGroup(AggtraPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nombreTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(precioTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nombret, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(precio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(ConTratamiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 13, Short.MAX_VALUE))
@@ -1356,6 +1416,7 @@ public class Prototipo extends javax.swing.JFrame {
         Citas.setVisible(true);
         Tratamiento.setVisible(false);
         mostar2();
+        fillcombo();
         if (MenuPlegable.getX() == 0) {
             desplace.desplazarIzquierda(MenuPlegable, MenuPlegable.getX(), -170, 10, 5);
         }
@@ -1374,27 +1435,29 @@ public class Prototipo extends javax.swing.JFrame {
     }//GEN-LAST:event_IngresartxtMouseExited
 
     private void EliminartxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EliminartxtMouseClicked
-        if(jTable1.getSelectionModel().isSelectionEmpty()){
-        try { 
-        int fila =jTable1.getSelectedRow();
-        int id = Integer.parseInt(jTable1.getValueAt(fila, 0).toString());
-        identidad = id;
-            try {
-                conexionBD conex = new conexionBD();
-                ResultSet r = conex.consultar("select nombre FROM cliente WHERE idc=" + id);
-                while (r.next()) {
-                    confirmacion = (r.getString("nombre"));
-                    System.out.println(confirmacion + " Esta es la variable");
-                }
-                DeletePanel ventana = new DeletePanel();
-                ventana.setVisible(true);
-            } catch (SQLException ex) {
-                Logger.getLogger(Prototipo.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (Exception ex) {
+        if (jTable1.getSelectionModel().isSelectionEmpty()) {
             JOptionPane.showMessageDialog(null, "Error, porfavor seleccione un registro que borrar", "Error Al Ingresar Datos", JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                int fila = jTable1.getSelectedRow();
+                int id = Integer.parseInt(jTable1.getValueAt(fila, 0).toString());
+                identidad = id;
+                try {
+                    conexionBD conex = new conexionBD();
+                    ResultSet r = conex.consultar("select nombre FROM cliente WHERE idc=" + id);
+                    while (r.next()) {
+                        confirmacion = (r.getString("nombre"));
+                        System.out.println(confirmacion + " Esta es la variable");
+                    }
+                    DeletePanel ventana = new DeletePanel();
+                    ventana.setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Prototipo.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error, porfavor seleccione un registro que borrar", "Error Al Ingresar Datos", JOptionPane.ERROR_MESSAGE);
+            }
         }
-        }else{JOptionPane.showMessageDialog(null, "Error, porfavor seleccione un registro que borrar", "Error Al Ingresar Datos", JOptionPane.ERROR_MESSAGE);}
     }//GEN-LAST:event_EliminartxtMouseClicked
 
     private void EliminartxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EliminartxtMouseEntered
@@ -1406,29 +1469,32 @@ public class Prototipo extends javax.swing.JFrame {
     }//GEN-LAST:event_EliminartxtMouseExited
 
     private void ModificartxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ModificartxtMouseClicked
-       if(jTable1.getSelectionModel().isSelectionEmpty()){
-        int fila = jTable1.getSelectedRow();
-        int id = Integer.parseInt(jTable1.getValueAt(fila, 0).toString());
-        identidad = id;
+        if (jTable1.getSelectionModel().isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(null, "Error, porfavor seleccione un registro que modificar", "Error Al Ingresar Datos", JOptionPane.ERROR_MESSAGE);
 
-        try {
-            conexionBD conex = new conexionBD();
-            ResultSet r = conex.consultar("select nombre,apellido,telefono,mail,fechan,lastcheck FROM cliente WHERE idc=" + id);
+        } else {
+            int fila = jTable1.getSelectedRow();
+            int id = Integer.parseInt(jTable1.getValueAt(fila, 0).toString());
+            identidad = id;
 
-            while (r.next()) {
-                auxname = r.getString("nombre");
-                auxape = r.getString("apellido");
-                auxtel = r.getString("telefono");
-                auxmail = r.getString("mail");
-                auxfen = new Date(r.getDate("fechan").getTime());
-                auxlc = new Date(r.getDate("lastcheck").getTime());
-                System.out.println(auxfen + " Y " + auxlc);
-                new ModClientePanel().setVisible(true);
+            try {
+                conexionBD conex = new conexionBD();
+                ResultSet r = conex.consultar("select nombre,apellido,telefono,mail,fechan,lastcheck FROM cliente WHERE idc=" + id);
+
+                while (r.next()) {
+                    auxname = r.getString("nombre");
+                    auxape = r.getString("apellido");
+                    auxtel = r.getString("telefono");
+                    auxmail = r.getString("mail");
+                    auxfen = new Date(r.getDate("fechan").getTime());
+                    auxlc = new Date(r.getDate("lastcheck").getTime());
+                    System.out.println(auxfen + " Y " + auxlc);
+                    new ModClientePanel().setVisible(true);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Prototipo.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(Prototipo.class.getName()).log(Level.SEVERE, null, ex);
         }
-       }else{JOptionPane.showMessageDialog(null, "Error, porfavor seleccione un registro que borrar", "Error Al Ingresar Datos", JOptionPane.ERROR_MESSAGE);}
     }//GEN-LAST:event_ModificartxtMouseClicked
 
     private void ModificartxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ModificartxtMouseEntered
@@ -1441,8 +1507,6 @@ public class Prototipo extends javax.swing.JFrame {
 
     private void UpdatetxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdatetxtMouseClicked
         // TODO add your handling code here:
-
-        int id = Integer.parseInt(jTable1.getValueAt(0, 0).toString());
         mostar();
     }//GEN-LAST:event_UpdatetxtMouseClicked
 
@@ -1545,6 +1609,7 @@ public class Prototipo extends javax.swing.JFrame {
         Clientes.setVisible(false);
         Citas.setVisible(false);
         Tratamiento.setVisible(true);
+        mostrar3();
         if (MenuPlegable.getX() == 0) {
             desplace.desplazarIzquierda(MenuPlegable, MenuPlegable.getX(), -170, 10, 5);
         }
@@ -1611,7 +1676,7 @@ public class Prototipo extends javax.swing.JFrame {
                 panelMod.setVisible(false);
                 JOptionPane.showMessageDialog(null, "Modificacion Exitosa", "Modificacion con exito", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "Error al Modificar los datos del Cleinte", "Error Al Modificar", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Error al Modificar los datos del Cliente", "Error Al Modificar", JOptionPane.INFORMATION_MESSAGE);
             }
 
         }
@@ -1622,116 +1687,324 @@ public class Prototipo extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_logoutMouseClicked
 
-    private void Ingresartxt1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Ingresartxt1MouseClicked
+    private void AggcitaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AggcitaMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_Ingresartxt1MouseClicked
+        String idctemp;
+        String idttemp;
+        int bandera = 0;
+        if (((JTextField) txtFecha1.getDateEditor().getUiComponent()).getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Error porfavor porporcione una fecha de cita", "Error Al Ingresar Datos", JOptionPane.ERROR_MESSAGE);
+            bandera++;
+        }
+        String day = null;
+        String month = null;
+        Addmodcitas.setVisible(true);
+        String idc = String.valueOf(Clientecombox.getSelectedItem().toString());//Convierte el seleccionado a txt
+        String idt = String.valueOf(tratacombox.getSelectedItem().toString());
+        String unidad = idc.charAt(1) + "";//Obtiene el segundo valor esto se hace por si es una decena 10
+        String uni = idc.charAt(1) + "";
+        if (unidad == "-") {
+            idctemp = idc.charAt(0) + "";
+        } else {
+            idctemp = idc.substring(0, 2);
+        }
+        if (uni == "-") {
+            idttemp = idt.charAt(0) + "";
+        } else {
+            idttemp = idt.substring(0, 2);
+        }
+        int dia = txtFecha1.getCalendar().get(Calendar.DAY_OF_MONTH);
+        int mes = txtFecha1.getCalendar().get(Calendar.MONTH) + 1;
+        String year = Integer.toString(txtFecha1.getCalendar().get(Calendar.YEAR));
 
-    private void Ingresartxt1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Ingresartxt1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Ingresartxt1MouseEntered
+        if (dia < 10) {
+            day = "0" + Integer.toString(dia);
+        } else {
+            day = Integer.toString(dia);
+        }
+        if (mes < 10) {
+            month = "0" + Integer.toString(mes);
+        } else {
+            month = Integer.toString(mes);
+        }
+        String fecha1 = (day + "/" + month + "/" + year);
+        DateTimeFormatter date = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate FecNac = LocalDate.parse(fecha1, date);
+        LocalDate FecAct = LocalDate.now();
+        Period periodo = Period.between(FecAct, FecNac);
+        String cita = (periodo.getDays() + "");
+        int consulta = Integer.parseInt(cita);
+        if (bandera == 0) {
+            if (consulta > 0) {
+                conexionBD conex = new conexionBD();
+                String pedir = "Insert into citas(fecha,idcliente,idtratamiento) values " + "(" + "'" + fecha1 + "'," + idctemp + "," + idttemp + ");";
+                System.out.println(pedir);//Debuger
+                int repuesta = conex.accionesEdit(pedir);
 
-    private void Ingresartxt1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Ingresartxt1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Ingresartxt1MouseExited
+                if (repuesta > 0) {
+                    JOptionPane.showMessageDialog(null, "Datos Ingresado Correctamente", "Insertado Correctamente", JOptionPane.INFORMATION_MESSAGE);
+                    mostar2();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error, porfavor rellene correctamente los campos, poner fechas futuras", "Error Al Ingresar Datos", JOptionPane.ERROR_MESSAGE);
+            }
+        }
 
-    private void Eliminartxt1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Eliminartxt1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Eliminartxt1MouseClicked
 
-    private void Eliminartxt1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Eliminartxt1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Eliminartxt1MouseEntered
+    }//GEN-LAST:event_AggcitaMouseClicked
 
-    private void Eliminartxt1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Eliminartxt1MouseExited
+    private void AggcitaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AggcitaMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_Eliminartxt1MouseExited
+        InrBtn.setBackground(new Color(255, 51, 153));
 
-    private void Modificartxt1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Modificartxt1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Modificartxt1MouseClicked
+    }//GEN-LAST:event_AggcitaMouseEntered
 
-    private void Modificartxt1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Modificartxt1MouseEntered
+    private void AggcitaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AggcitaMouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_Modificartxt1MouseEntered
+        InrBtn.setBackground(new Color(242, 120, 159));
 
-    private void Modificartxt1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Modificartxt1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Modificartxt1MouseExited
+    }//GEN-LAST:event_AggcitaMouseExited
 
-    private void Ingresartxt2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Ingresartxt2MouseClicked
+    private void DelCitaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DelCitaMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_Ingresartxt2MouseClicked
+        if (jTable2.getSelectionModel().isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(null, "Error, porfavor seleccione los datos del registro", "Error Al Modificar", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            int fila = jTable2.getSelectedRow();
+            int id = Integer.parseInt(jTable2.getValueAt(fila, 0).toString());
+            conexionBD conex = new conexionBD();
+            int i = JOptionPane.showConfirmDialog(this, "¿Desea ELIMINAR la cita?", "¿Desea ELIMINAR la cita?", JOptionPane.YES_NO_OPTION);
+            if (i == 0) {
+                String consulta = "Delete FROM citas WHERE idcitas=" + id;
+                System.out.println(consulta);
+                int repuesta = conex.accionesEdit(consulta);
 
-    private void Ingresartxt2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Ingresartxt2MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Ingresartxt2MouseEntered
+                if (repuesta > 0) {
+                    JOptionPane.showMessageDialog(null, "Clente borraro con Exito", "Se Elimino Correctamente", JOptionPane.INFORMATION_MESSAGE);
+                    AggtraPanel.setVisible(true);
+                    aggomod = 0;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error Al Borrar la cita", "Error Al Borrar", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }//GEN-LAST:event_DelCitaMouseClicked
 
-    private void Ingresartxt2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Ingresartxt2MouseExited
+    private void DelCitaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DelCitaMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_Ingresartxt2MouseExited
+        Delcitabtn.setBackground(new Color(255, 51, 153));
+    }//GEN-LAST:event_DelCitaMouseEntered
+
+    private void DelCitaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DelCitaMouseExited
+        // TODO add your handling code here:
+        Delcitabtn.setBackground(new Color(242, 120, 159));
+    }//GEN-LAST:event_DelCitaMouseExited
+
+    private void ModcitaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ModcitaMouseClicked
+        // TODO add your handling code here:
+
+        if (jTable2.getSelectionModel().isSelectionEmpty()) {//Si no hay nada seleccionado
+            JOptionPane.showMessageDialog(null, "Error, porfavor seleccione un registro que modificar", "Error Al Ingresar Datos", JOptionPane.ERROR_MESSAGE);
+        } else {
+            int fila = jTable2.getSelectedRow();//Se guarda solo 1 vez
+            int id = Integer.parseInt(jTable2.getValueAt(fila, 0).toString());
+            int bandera = 0;
+            if (((JTextField) txtFecha1.getDateEditor().getUiComponent()).getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Error porfavor porporcione una fecha de cita", "Error Al Ingresar Datos", JOptionPane.ERROR_MESSAGE);
+                bandera++;
+            }
+            String day = null;
+            String month = null;
+            int dia = txtFecha1.getCalendar().get(Calendar.DAY_OF_MONTH);
+            int mes = txtFecha1.getCalendar().get(Calendar.MONTH) + 1;
+            String year = Integer.toString(txtFecha1.getCalendar().get(Calendar.YEAR));
+            if (dia < 10) {
+                day = "0" + Integer.toString(dia);
+            } else {
+                day = Integer.toString(dia);
+            }
+            if (mes < 10) {
+                month = "0" + Integer.toString(mes);
+            } else {
+                month = Integer.toString(mes);
+            }
+            String fecha1 = (day + "/" + month + "/" + year);
+            DateTimeFormatter date = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate FecNac = LocalDate.parse(fecha1, date);
+            LocalDate FecAct = LocalDate.now();
+            Period periodo = Period.between(FecAct, FecNac);
+            String cita = (periodo.getDays() + "");
+            int llamado = Integer.parseInt(cita);
+            if (llamado > 0) {
+                if (bandera == 0) {
+                    conexionBD conex = new conexionBD();
+                    String consulta = "UPDATE citas SET fecha= '" + fecha1 + "' WHERE idcitas=" + id;
+                    int repuesta = conex.accionesEdit(consulta);
+                    if (repuesta > 0) {
+                        JOptionPane.showMessageDialog(null, "Modificacion Exitosa", "Modificacion con exito", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al Modificar los datos de la cita", "Error Al Modificar", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        }
+
+
+    }//GEN-LAST:event_ModcitaMouseClicked
+
+    private void ModcitaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ModcitaMouseEntered
+        // TODO add your handling code here:
+        ModcitarBtn.setBackground(new Color(255, 51, 153));
+
+    }//GEN-LAST:event_ModcitaMouseEntered
+
+    private void ModcitaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ModcitaMouseExited
+        // TODO add your handling code here:
+        ModcitarBtn.setBackground(new Color(242, 120, 159));
+    }//GEN-LAST:event_ModcitaMouseExited
+
+    private void reminderMailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reminderMailMouseClicked
+        // TODO add your handling code here:
+        if (jTable2.getSelectionModel().isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(null, "Error, porfavor seleccione los datos del Cliente", "Error Al Modificar", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            int fila = jTable2.getSelectedRow();
+            String idename = jTable2.getValueAt(fila, 1).toString();
+            String direccion = jTable2.getValueAt(fila, 4).toString();
+            String fecita = jTable2.getValueAt(fila, 5).toString();
+            try {
+                mailsender(idename, fecita, direccion);
+            } catch (MessagingException ex) {
+                Logger.getLogger(Prototipo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_reminderMailMouseClicked
+
+    private void reminderMailMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reminderMailMouseEntered
+        // TODO add your handling code here:
+        reminderBtn.setBackground(new Color(255, 51, 153));
+    }//GEN-LAST:event_reminderMailMouseEntered
+
+    private void reminderMailMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reminderMailMouseExited
+        // TODO add your handling code here:
+        reminderBtn.setBackground(new Color(242, 120, 159));
+    }//GEN-LAST:event_reminderMailMouseExited
 
     private void AddtraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddtraMouseClicked
         // TODO add your handling code here:
         AggtraPanel.setVisible(true);
+        aggomod = 1;
     }//GEN-LAST:event_AddtraMouseClicked
 
     private void AddtraMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddtraMouseEntered
         // TODO add your handling code here:
-         Confi.setBackground(new Color(153, 102, 0));
+        Addtrat.setBackground(new Color(153, 102, 0));
     }//GEN-LAST:event_AddtraMouseEntered
 
     private void AddtraMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddtraMouseExited
         // TODO add your handling code here:
-         Confi.setBackground(new Color(190,140,99));
+        Addtrat.setBackground(new Color(190, 140, 99));
     }//GEN-LAST:event_AddtraMouseExited
 
     private void DeltraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DeltraMouseClicked
         // TODO add your handling code here:
+        if (jTable3.getSelectionModel().isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(null, "Error, porfavor seleccione los datos del Tratamiento", "Error Al Modificar", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            int fila = jTable3.getSelectedRow();
+            int id = Integer.parseInt(jTable3.getValueAt(fila, 0).toString());
+            conexionBD conex = new conexionBD();
+            int i = JOptionPane.showConfirmDialog(this, "¿Desea modificar el Tratamiento?", "¿Desea modificar el Tratamiento?", JOptionPane.YES_NO_OPTION);
+            if (i == 0) {
+                String consulta = "Delete FROM tratamiento WHERE idt=" + id;
+                System.out.println(consulta);
+                int repuesta = conex.accionesEdit(consulta);
+
+                if (repuesta > 0) {
+                    JOptionPane.showMessageDialog(null, "Tratamiento borrado con Exito", "Se Elimino Correctamente", JOptionPane.INFORMATION_MESSAGE);
+                   AggtraPanel.setVisible(false);
+                    aggomod = 0;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error Al Borrar el Tratamiento", "Error Al Borrar", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
     }//GEN-LAST:event_DeltraMouseClicked
 
     private void DeltraMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DeltraMouseEntered
         // TODO add your handling code here:
+        Deltrat.setBackground(new Color(153, 102, 0));
+
     }//GEN-LAST:event_DeltraMouseEntered
 
     private void DeltraMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DeltraMouseExited
         // TODO add your handling code here:
+        Deltrat.setBackground(new Color(190, 140, 99));
     }//GEN-LAST:event_DeltraMouseExited
 
-    private void ModtraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ModtraMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ModtraMouseClicked
+    private void modtraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modtraMouseClicked
+        if (jTable3.getSelectionModel().isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(null, "Error, porfavor seleccione los datos del Tratamietno", "Error Al Modificar", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            AggtraPanel.setVisible(true);
+            int fila = jTable3.getSelectedRow();
+            int id = Integer.parseInt(jTable3.getValueAt(fila, 0).toString());
+            idtt = Integer.toString(id);
+            try {
+                conexionBD conex = new conexionBD();
+                ResultSet r = conex.consultar("select nombret,costo FROM tratamiento WHERE idt=" + idtt);
+                while (r.next()) {
+                    auxnt = r.getString("nombret");
+                    auxprice = r.getString("costo");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Prototipo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            nombret.setText(auxnt + "");
+            precio.setText(auxprice + "");
+        }
+    }//GEN-LAST:event_modtraMouseClicked
 
-    private void ModtraMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ModtraMouseEntered
+    private void modtraMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modtraMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_ModtraMouseEntered
+        Modtrat.setBackground(new Color(153, 102, 0));
+    }//GEN-LAST:event_modtraMouseEntered
 
-    private void ModtraMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ModtraMouseExited
+    private void modtraMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modtraMouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_ModtraMouseExited
+        Modtrat.setBackground(new Color(190, 140, 99));
+    }//GEN-LAST:event_modtraMouseExited
 
     private void UpdatraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdatraMouseClicked
         // TODO add your handling code here:
+        mostrar3();
     }//GEN-LAST:event_UpdatraMouseClicked
 
     private void UpdatraMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdatraMouseEntered
         // TODO add your handling code here:
+        actutrat.setBackground(new Color(153, 102, 0));
     }//GEN-LAST:event_UpdatraMouseEntered
 
     private void UpdatraMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdatraMouseExited
         // TODO add your handling code here:
+        actutrat.setBackground(new Color(190, 140, 99));
     }//GEN-LAST:event_UpdatraMouseExited
 
-    private void Updatetxt2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Updatetxt2MouseClicked
+    private void ActucitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ActucitasMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_Updatetxt2MouseClicked
+        mostar2();
+    }//GEN-LAST:event_ActucitasMouseClicked
 
-    private void Updatetxt2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Updatetxt2MouseEntered
+    private void ActucitasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ActucitasMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_Updatetxt2MouseEntered
+        UpdateBtn2.setBackground(new Color(255, 51, 153));
+    }//GEN-LAST:event_ActucitasMouseEntered
 
-    private void Updatetxt2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Updatetxt2MouseExited
+    private void ActucitasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ActucitasMouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_Updatetxt2MouseExited
+        UpdateBtn2.setBackground(new Color(242, 120, 159));
+    }//GEN-LAST:event_ActucitasMouseExited
 
     private void ConfirmarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ConfirmarMouseEntered
         Confirmar.setBackground(new Color(0, 156, 223));
@@ -1741,49 +2014,77 @@ public class Prototipo extends javax.swing.JFrame {
         Confirmar.setBackground(new Color(84, 186, 185));
     }//GEN-LAST:event_ConfirmarMouseExited
 
-    private void nombreTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nombreTxtMousePressed
-        if (nombreTxt.getText().equals("Ingrese el nombre del tratamiento")) {
-            nombreTxt.setText("");
-            nombreTxt.setForeground(Color.black);
+    private void nombretMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nombretMousePressed
+        if (nombret.getText().equals("Ingrese el nombre del tratamiento")) {
+            nombret.setText("");
+            nombret.setForeground(Color.black);
         }
-    }//GEN-LAST:event_nombreTxtMousePressed
+    }//GEN-LAST:event_nombretMousePressed
 
-    private void precioTxtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_precioTxtMousePressed
-        if (nombreTxt.getText().equals("Ingrese el precio del tratamiento")) {
-            nombreTxt.setText("");
-            nombreTxt.setForeground(Color.black);
+    private void precioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_precioMousePressed
+        if (precio.getText().equals("Ingrese el precio del tratamiento")) {
+            precio.setText("");
+            precio.setForeground(Color.black);
         }
-    }//GEN-LAST:event_precioTxtMousePressed
+    }//GEN-LAST:event_precioMousePressed
 
-    private void nombreTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreTxtActionPerformed
+    private void nombretActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombretActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_nombreTxtActionPerformed
+    }//GEN-LAST:event_nombretActionPerformed
 
-    private void precioTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precioTxtActionPerformed
+    private void precioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_precioTxtActionPerformed
+    }//GEN-LAST:event_precioActionPerformed
 
     private void ConfiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ConfiMouseClicked
         // TODO add your handling code here:
         int bandera = 0;
-        if (nombreTxt.getText().equals("Ingrese el nombre del tratamiento") || nombreTxt.getText().isEmpty() || isNumeric(nombreTxt.getText()) == true) {
-            bandera++;
-        }
-        if (precioTxt.getText().equals("Ingrese el precio del tratamiento") || precioTxt.getText().isEmpty() || isNumeric(precioTxt.getText()) == false) {
-            bandera++;
-        }
-        if (bandera == 0) {
-            conexionBD conex = new conexionBD();
-            String consulta = "Insert into tratamiento(nombret,costo) values " + "(" + "'" + nombreTxt.getText() + "'," + precioTxt.getText() + ");";
-            System.out.println(consulta);//Debuger
-            int repuesta = conex.accionesEdit(consulta);
+        if (aggomod == 1) {
 
-            if (repuesta > 0) {
-                JOptionPane.showMessageDialog(null, "Datos Ingresado Correctamente", "Insertado Correctamente", JOptionPane.INFORMATION_MESSAGE);
-                dispose();
+            if (nombret.getText().equals("Ingrese el nombre del tratamiento") || nombret.getText().isEmpty() || isNumeric(nombret.getText()) == true) {
+                bandera++;
+            }
+            if (precio.getText().equals("Ingrese el precio del tratamiento") || precio.getText().isEmpty() || isNumeric(precio.getText()) == false) {
+                bandera++;
+            }
+            if (bandera == 0) {
+                conexionBD conex = new conexionBD();
+                String consulta = "Insert into tratamiento(nombret,costo) values " + "(" + "'" + nombret.getText() + "'," + precio.getText() + ");";
+                System.out.println(consulta);//Debuger
+                int repuesta = conex.accionesEdit(consulta);
+                if (repuesta > 0) {
+                    JOptionPane.showMessageDialog(null, "Datos Ingresado Correctamente", "Insertado Correctamente", JOptionPane.INFORMATION_MESSAGE);
+                    aggomod = 0;
+                    AggtraPanel.setVisible(false);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error, porfavor rellene correctamente los campos, solo poner texto donde se le pide y poner numero donde se le pide", "Error Al Ingresar Datos", JOptionPane.ERROR_MESSAGE);
+                aggomod = 0;
+                AggtraPanel.setVisible(false);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Error, porfavor rellene correctamente los campos, solo poner texto donde se le pide y poner numero donde se le pide", "Error Al Ingresar Datos", JOptionPane.ERROR_MESSAGE);
+            if (nombret.getText().equals("Ingrese el nombre del tratamiento") || nombret.getText().isEmpty() || isNumeric(nombret.getText()) == true) {
+                bandera++;
+            }
+            if (precio.getText().equals("Ingrese el precio del tratamiento") || precio.getText().isEmpty() || isNumeric(precio.getText()) == false) {
+                bandera++;
+            }
+            if (bandera == 0) {
+                conexionBD conex = new conexionBD();
+                String consulta = "UPDATE tratamiento SET nombret=" + "'" + nombret.getText() + "',costo=" + precio.getText() + " WHERE idt=" + idtt;
+                System.out.println(consulta);//Debuger
+                int repuesta = conex.accionesEdit(consulta);
+                if (repuesta > 0) {
+                    JOptionPane.showMessageDialog(null, "Modificacion Exitosa", "Modificacion con exito", JOptionPane.INFORMATION_MESSAGE);
+                    AggtraPanel.setVisible(false);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al Modificar los datos del tratamiento", "Error Al Modificar", JOptionPane.INFORMATION_MESSAGE);
+                    AggtraPanel.setVisible(false);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error, porfavor rellene correctamente los campos, solo poner texto donde se le pide y poner numero donde se le pide", "Error Al Ingresar Datos", JOptionPane.ERROR_MESSAGE);
+                aggomod = 0;
+            }
         }
     }//GEN-LAST:event_ConfiMouseClicked
 
@@ -1794,7 +2095,7 @@ public class Prototipo extends javax.swing.JFrame {
 
     private void ConfiMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ConfiMouseExited
         // TODO add your handling code here:
-         Confi.setBackground(new Color(190,140,99));
+        Confi.setBackground(new Color(190, 140, 99));
     }//GEN-LAST:event_ConfiMouseExited
     void mostar() {//personaliza y crea la tabla
         Color myColor = new Color(239, 255, 253);
@@ -1890,7 +2191,7 @@ public class Prototipo extends javax.swing.JFrame {
             jTable3.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);//Obtiene todas las columnas necesarias
         }
         conexionBD conex = new conexionBD();//Conecta con la BD
-        ResultSet r = conex.consultar("SELECT * FROM tratamiento");//Declara la consulta de los datos
+        ResultSet r = conex.consultar("SELECT * FROM tratamiento order by idt asc");//Declara la consulta de los datos
         DefaultTableModel modelo = new DefaultTableModel();//Ubica las columnas  
         modelo = (DefaultTableModel) jTable3.getModel();
         modelo.setRowCount(0); //indica el inicio para ingresar datos desde la columna 0
@@ -1902,6 +2203,78 @@ public class Prototipo extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Prototipo.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    void fillcombo() {
+        Clientecombox.addItem("Seleccione una opcion");
+        tratacombox.addItem("seleccione una opcion");
+        String tempcliente, temptrata;
+        conexionBD conex = new conexionBD();//Conecta con la BD
+        ResultSet r = conex.consultar("SELECT * FROM cliente");//Declara la consulta de los datos
+        ResultSet t = conex.consultar("SELECT * FROM tratamiento order by idt asc");//Declara la consulta de los datos
+        try {
+            Clientecombox.removeAll();
+            while (r.next()) {//Mientras haya objetos en la tabla de BD los obtendra
+                idcombo = r.getString("idc");
+                String tempnombre = r.getString("nombre");
+                String tempapellido = r.getString("apellido");
+                tempcliente = idcombo + "- " + tempnombre + " " + tempapellido;
+                Clientecombox.addItem(tempcliente);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Prototipo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            tratacombox.removeAll();
+            while (t.next()) {//Mientras haya objetos en la tabla de BD los obtendra
+                idtrata = t.getString("idt");
+                String tempnombre = t.getString("nombret");
+                temptrata = idtrata + "-" + tempnombre;
+                tratacombox.addItem(temptrata);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Prototipo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    void mailsender(String nombre, String fecha, String c) throws AddressException, MessagingException {
+        String correo = "clinicadentallaesperanza@gmail.com";
+        String contra = "mwznkylnrthqlzww";
+        String correoDestino = c;//Add Variable correo obtenida del while
+        Properties p = new Properties();
+        p.put("mail.smtp.host", "smtp.gmail.com");
+        p.setProperty("mail.smtp.starttls.enable", "true");
+        p.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        p.setProperty("mail.smtp.port", "587");
+        p.setProperty("mail.smtp.user", correo);
+        p.setProperty("mail.smtp.auth", "true");
+        Session s = Session.getDefaultInstance(p);
+
+        BodyPart texto = new MimeBodyPart();
+        texto.setText("Hola " + nombre + ". Se solicita su presencia el dia " + fecha + " a la hora acordada, de ser posible 15 minutos antes para evitar inconvenientes.\n"
+                + "Gracias por preferirnos!\n\n" + "MENSAJE AUTOMATIZADO FAVOR NO CONTESTAR");
+        BodyPart adjunto = new MimeBodyPart();
+
+        adjunto.setDataHandler(new DataHandler(new FileDataSource("C:/Users/elian/Documents/firma.jpg")));
+        adjunto.setFileName("firma.jpg");
+        MimeMultipart m = new MimeMultipart();
+        m.addBodyPart(texto);
+        m.addBodyPart(adjunto);
+
+        MimeMessage mensaje = new MimeMessage(s);
+        mensaje.setFrom(new InternetAddress(correo));
+        mensaje.addRecipient(Message.RecipientType.TO, new InternetAddress(correoDestino));
+        mensaje.setSubject("Recordadtorio de su cita");//Adjuntar fecha en el constructor
+        mensaje.setContent(m);
+
+        Transport t = s.getTransport("smtp");
+        t.connect(correo, contra);
+        t.sendMessage(mensaje, mensaje.getAllRecipients());
+        t.close();
+        JOptionPane.showMessageDialog(null, "Mensaje Enviado");
     }
 
     private boolean isNumeric(String cadena) {
@@ -1957,7 +2330,11 @@ public class Prototipo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Actucitas;
+    private javax.swing.JPanel Addmodcitas;
     private javax.swing.JLabel Addtra;
+    private javax.swing.JPanel Addtrat;
+    private javax.swing.JLabel Aggcita;
     private javax.swing.JPanel AggtraPanel;
     private javax.swing.JPanel AscBtn;
     private javax.swing.JLabel Asctxt;
@@ -1966,35 +2343,32 @@ public class Prototipo extends javax.swing.JFrame {
     private javax.swing.JLabel BtnInicio;
     private javax.swing.JLabel BtnTratamiento;
     private javax.swing.JPanel Citas;
+    private javax.swing.JComboBox<String> Clientecombox;
     private javax.swing.JPanel Clientes;
     private javax.swing.JPanel ConTratamiento;
     private javax.swing.JLabel Confi;
     private javax.swing.JPanel Confirmar;
     private javax.swing.JPasswordField Confpass;
+    private javax.swing.JLabel DelCita;
+    private javax.swing.JPanel Delcitabtn;
     private javax.swing.JLabel Deltra;
+    private javax.swing.JPanel Deltrat;
     private javax.swing.JLabel Desplazo;
     private javax.swing.JPanel DscBtn;
     private javax.swing.JLabel DscTxt;
     private javax.swing.JPanel EliminarBtn;
-    private javax.swing.JPanel EliminarBtn1;
-    private javax.swing.JPanel EliminarBtn2;
     private javax.swing.JLabel Eliminartxt;
-    private javax.swing.JLabel Eliminartxt1;
     private javax.swing.JPanel IngresarBtn;
-    private javax.swing.JPanel IngresarBtn1;
     private javax.swing.JLabel Ingresartxt;
-    private javax.swing.JLabel Ingresartxt1;
-    private javax.swing.JLabel Ingresartxt2;
     private javax.swing.JPanel Inicio;
     private javax.swing.JPanel InrBtn;
     private javax.swing.JPanel MenuPlegable;
     private javax.swing.JLabel ModPass;
+    private javax.swing.JLabel Modcita;
+    private javax.swing.JPanel ModcitarBtn;
     private javax.swing.JPanel ModificarBtn;
-    private javax.swing.JPanel ModificarBtn1;
-    private javax.swing.JPanel ModificarBtn2;
     private javax.swing.JLabel Modificartxt;
-    private javax.swing.JLabel Modificartxt1;
-    private javax.swing.JLabel Modtra;
+    private javax.swing.JPanel Modtrat;
     private javax.swing.JLabel Npass;
     private javax.swing.JScrollPane Scroll;
     private javax.swing.JScrollPane Scroll1;
@@ -2002,11 +2376,10 @@ public class Prototipo extends javax.swing.JFrame {
     private javax.swing.JPanel Tabla;
     private javax.swing.JPanel Tratamiento;
     private javax.swing.JPanel UpdateBtn;
-    private javax.swing.JPanel UpdateBtn1;
     private javax.swing.JPanel UpdateBtn2;
     private javax.swing.JLabel Updatetxt;
-    private javax.swing.JLabel Updatetxt2;
     private javax.swing.JLabel Updatra;
+    private javax.swing.JPanel actutrat;
     private javax.swing.JLabel confpasss;
     private javax.swing.JPanel exitBtn;
     private javax.swing.JLabel exitTxt;
@@ -2025,10 +2398,14 @@ public class Prototipo extends javax.swing.JFrame {
     private javax.swing.JPanel logout;
     private javax.swing.JLabel modTxt;
     private javax.swing.JPanel modcontra;
-    private javax.swing.JTextField nombreTxt;
+    private javax.swing.JLabel modtra;
+    private javax.swing.JTextField nombret;
     private javax.swing.JPanel panelMod;
     private javax.swing.JPasswordField passTxt;
-    private javax.swing.JTextField precioTxt;
+    private javax.swing.JTextField precio;
     private javax.swing.JPanel reminderBtn;
+    private javax.swing.JLabel reminderMail;
+    private javax.swing.JComboBox<String> tratacombox;
+    private com.toedter.calendar.JDateChooser txtFecha1;
     // End of variables declaration//GEN-END:variables
 }

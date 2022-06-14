@@ -27,8 +27,6 @@ public class DeletePanel extends javax.swing.JFrame {
         EliminarBtn = new javax.swing.JPanel();
         Eliminar = new javax.swing.JLabel();
         header = new javax.swing.JPanel();
-        exitBtn = new javax.swing.JPanel();
-        exitTxt = new javax.swing.JLabel();
         confiTxt = new javax.swing.JLabel();
         Cancelar = new javax.swing.JPanel();
         Cancel = new javax.swing.JLabel();
@@ -92,53 +90,15 @@ public class DeletePanel extends javax.swing.JFrame {
             }
         });
 
-        exitBtn.setBackground(new java.awt.Color(251, 248, 241));
-
-        exitTxt.setBackground(new java.awt.Color(251, 248, 241));
-        exitTxt.setFont(new java.awt.Font("Roboto Light", 0, 24)); // NOI18N
-        exitTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        exitTxt.setText("X");
-        exitTxt.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        exitTxt.setPreferredSize(new java.awt.Dimension(40, 40));
-        exitTxt.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                exitTxtMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                exitTxtMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                exitTxtMouseExited(evt);
-            }
-        });
-
-        javax.swing.GroupLayout exitBtnLayout = new javax.swing.GroupLayout(exitBtn);
-        exitBtn.setLayout(exitBtnLayout);
-        exitBtnLayout.setHorizontalGroup(
-            exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(exitBtnLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(exitTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        exitBtnLayout.setVerticalGroup(
-            exitBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(exitTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
         headerLayout.setHorizontalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerLayout.createSequentialGroup()
-                .addGap(0, 448, Short.MAX_VALUE)
-                .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(0, 500, Short.MAX_VALUE)
         );
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(headerLayout.createSequentialGroup()
-                .addComponent(exitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 10, Short.MAX_VALUE))
+            .addGap(0, 40, Short.MAX_VALUE)
         );
 
         DelCliente.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 40));
@@ -209,20 +169,6 @@ public class DeletePanel extends javax.swing.JFrame {
     private void EliminarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EliminarMouseExited
         EliminarBtn.setBackground(new Color(255,51,51));
     }//GEN-LAST:event_EliminarMouseExited
-
-    private void exitTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseClicked
-        dispose();
-    }//GEN-LAST:event_exitTxtMouseClicked
-
-    private void exitTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseEntered
-        exitBtn.setBackground(Color.red);
-        exitTxt.setForeground(new Color(251, 248, 243));
-    }//GEN-LAST:event_exitTxtMouseEntered
-
-    private void exitTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitTxtMouseExited
-        exitBtn.setBackground(new Color(251, 248, 243));
-        exitTxt.setForeground(Color.black);
-    }//GEN-LAST:event_exitTxtMouseExited
 
     private void headerMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_headerMouseDragged
         int x = evt.getXOnScreen();
@@ -343,8 +289,6 @@ public class DeletePanel extends javax.swing.JFrame {
     private javax.swing.JPanel EliminarBtn;
     private javax.swing.JLabel NombreLabel;
     private javax.swing.JLabel confiTxt;
-    private javax.swing.JPanel exitBtn;
-    private javax.swing.JLabel exitTxt;
     private javax.swing.JPanel header;
     // End of variables declaration//GEN-END:variables
 }
